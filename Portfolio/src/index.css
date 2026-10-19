@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-hax-cream: #fff8f1;
+  --color-hax-berry: #a34063;
+  --color-hax-darkBerry: #5c4033;
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Fredoka", sans-serif;
+}
+
+html, body {
+  background-color: #fff8f1;
+  color: #5c4033;
+  overflow-x: hidden;
+  cursor: url('/wand-cursor-32.png') 24 6, url('/wand-cursor.png') 24 6, auto;
+}
+
+html.dark, html.dark body {
+  background-color: #251b17;
+  color: #fff8f1;
+}
+
+button, a, input, select, textarea, [role="button"], .cursor-pointer {
+  cursor: url('/wand-cursor-32.png') 24 6, url('/wand-cursor.png') 24 6, pointer !important;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
