@@ -167,12 +167,12 @@ export default function AuthPage({ onAuthenticated }) {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#5c4033] bg-[url('/mushroom-tree-bg.png')] bg-cover bg-center flex items-center justify-center relative select-none font-sans p-2 sm:p-4 md:p-6 py-4 sm:py-8 overflow-y-auto">
+    <div className="min-h-screen w-full bg-[#5c4033] bg-[url('/mushroom-tree-bg.png')] bg-cover bg-center flex items-center justify-center relative select-none font-sans p-3 sm:p-5 md:p-6 py-6 sm:py-8 overflow-y-auto">
       {/* ════════════════════════════════════════════════════════════════
           THE INNER BROWSER WINDOW
           Responsive card with macOS-styled title bar & shadow
          ════════════════════════════════════════════════════════════════ */}
-      <div className="w-[96%] sm:w-[92%] max-w-6xl my-auto bg-[#fff8f1] border-3 sm:border-4 border-[#5c4033] rounded-[1.5rem] sm:rounded-[2rem] flex flex-col relative shadow-[8px_8px_0px_rgba(0,0,0,0.18)] md:shadow-[12px_12px_0px_rgba(0,0,0,0.15)] overflow-hidden">
+      <div className="w-[96%] sm:w-[92%] md:w-[94%] max-w-5xl lg:max-w-6xl my-auto bg-[#fff8f1] border-3 sm:border-4 border-[#5c4033] rounded-[1.5rem] sm:rounded-[2rem] flex flex-col relative shadow-[8px_8px_0px_rgba(0,0,0,0.18)] md:shadow-[12px_12px_0px_rgba(0,0,0,0.15)] overflow-hidden">
         {/* Mock Title Bar with Red/Yellow/Green dots and URL capsule */}
         <div className="w-full bg-[#382b26] px-4 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between border-b-2 border-[#2b201c] shrink-0 z-30">
           {/* Top-left window control dots */}
@@ -196,67 +196,73 @@ export default function AuthPage({ onAuthenticated }) {
         {/* ════════════════════════════════════════════════════════════
             SPLIT CONTAINER: Left Character Panel & Right Ancient Scroll
            ════════════════════════════════════════════════════════════ */}
-        <div className="flex-1 w-full flex flex-col md:flex-row relative overflow-y-auto md:overflow-hidden">
-          {/* Mobile-only Interactive Chibi Header (<md) */}
-          <div className="flex md:hidden flex-col items-center justify-center pt-3 pb-1 select-none">
-            <motion.div
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                try {
-                  playPop();
-                } catch (e) {}
-                triggerFullPageMagic();
-              }}
-              className="cursor-pointer flex items-center gap-2 px-3.5 py-1 bg-[#fff8f1] border-2 border-[#5c4033] rounded-full shadow-[2px_2px_0px_#5c4033] transition-transform active:scale-95"
-              title="Click Ayush for whole-page magic sparkles!"
-            >
-              <img
-                src={chibiImg}
-                alt="Chibi Ayush"
-                className="w-7 h-7 object-contain mix-blend-multiply"
-              />
-              <span className="text-[11px] font-extrabold text-[#5c4033]">
-                Identify yourself, Mage! ✦
-              </span>
-            </motion.div>
+        <div className="w-full flex-1 flex flex-col md:flex-row items-center justify-center p-3 sm:p-5 md:p-6 lg:p-8 gap-4 md:gap-6 relative overflow-y-auto md:overflow-visible">
+          {/* ════════════════════════════════════════════════════════════
+              MOBILE CHIBI HEADER (< md)
+             ════════════════════════════════════════════════════════════ */}
+          <div className="flex md:hidden flex-col items-center justify-center select-none pt-1">
+            <div className="relative">
+              {/* Mobile Speech Bubble */}
+              <motion.div
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute -top-3 -right-6 z-20 cursor-default"
+              >
+                <div className="bg-white border-2 border-[#5c4033] px-2.5 py-0.5 rounded-xl shadow-[2px_2px_0px_#5c4033] text-center">
+                  <span className="text-[10px] font-bold text-[#5c4033]">Identify yourself! ✦</span>
+                </div>
+              </motion.div>
+              {/* Mobile Chibi Character */}
+              <motion.div
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  try {
+                    playPop();
+                  } catch (e) {}
+                  triggerFullPageMagic();
+                }}
+                className="cursor-pointer"
+                title="Tap Ayush for magic sparkles!"
+              >
+                <img
+                  src={chibiImg}
+                  alt="Chibi Ayush Mage"
+                  className="w-24 h-24 object-contain mix-blend-multiply drop-shadow-sm select-none"
+                />
+              </motion.div>
+            </div>
           </div>
 
           {/* ════════════════════════════════════════════════════════════
-              1. LEFT PANEL (Desktop Character Panel >=md)
-              Prominent Chibi Ayush image with click-to-sparkle whole-page effect
+              1. LEFT PANEL (Desktop & Tablet Character Panel >= md)
+              Prominent, vertically centered Chibi Ayush with magic trigger
              ════════════════════════════════════════════════════════════ */}
-          <div className="hidden md:flex md:w-1/2 h-full flex-col justify-center items-center p-4 lg:p-6 relative select-none overflow-visible">
+          <div className="hidden md:flex md:w-1/2 flex-col items-center justify-center p-2 lg:p-4 relative select-none">
             {/* Ambient Star Sparkles */}
-            <div className="absolute top-12 left-16 text-amber-500 font-bold text-sm pointer-events-none">
+            <div className="absolute top-4 left-8 text-amber-500 font-bold text-sm pointer-events-none animate-pulse">
               ✦
             </div>
-            <div className="absolute top-20 right-24 text-amber-500 font-bold text-xs pointer-events-none">
+            <div className="absolute top-10 right-12 text-amber-500 font-bold text-xs pointer-events-none">
               ✦
             </div>
-            <div className="absolute top-36 left-28 text-amber-500 font-bold text-xs pointer-events-none">
+            <div className="absolute bottom-6 left-10 text-amber-500 font-bold text-xs pointer-events-none">
               ✦
             </div>
-            <div className="absolute top-44 right-16 text-amber-500 font-bold text-sm pointer-events-none">
-              ✦
-            </div>
-            <div className="absolute bottom-28 left-20 text-[#5c4033]/40 text-xs pointer-events-none">
-              •
-            </div>
-            <div className="absolute bottom-36 right-20 text-[#5c4033]/40 text-xs pointer-events-none">
+            <div className="absolute bottom-12 right-10 text-[#5c4033]/40 text-xs pointer-events-none">
               •
             </div>
 
             {/* Character Container with continuous gentle float motion */}
-            <div className="relative inline-block my-auto overflow-visible">
+            <div className="relative flex flex-col items-center justify-center">
               {/* Comic Speech Bubble: "Identify yourself, Mage!" */}
               <motion.div
-                animate={{ y: [0, -3, 0] }}
+                animate={{ y: [0, -4, 0] }}
                 transition={{
                   duration: 3,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute -top-6 -right-6 lg:-right-8 z-20 cursor-default"
+                className="absolute top-1 -right-4 lg:-right-6 z-20 cursor-default"
               >
                 <div className="relative bg-white border-2 border-[#5c4033] px-3.5 py-1.5 rounded-2xl shadow-[2.5px_2.5px_0px_#5c4033] text-center">
                   <span className="text-xs sm:text-sm font-bold text-[#5c4033] leading-tight font-sans block">
@@ -267,9 +273,9 @@ export default function AuthPage({ onAuthenticated }) {
                     Mage!
                   </span>
                   {/* Cursor Arrow Pointer */}
-                  <div className="absolute -bottom-3 -right-2 text-[#5c4033]">
+                  <div className="absolute -bottom-2.5 -right-1 text-[#5c4033]">
                     <svg
-                      className="w-4 h-4"
+                      className="w-3.5 h-3.5"
                       viewBox="0 0 24 24"
                       fill="#fff8f1"
                       stroke="#5c4033"
@@ -281,7 +287,7 @@ export default function AuthPage({ onAuthenticated }) {
                 </div>
                 {/* Speech tail */}
                 <svg
-                  className="w-5 h-5 text-[#5c4033] absolute -bottom-1 -left-1"
+                  className="w-4 h-4 text-[#5c4033] absolute -bottom-1 -left-1"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -293,7 +299,7 @@ export default function AuthPage({ onAuthenticated }) {
                 </svg>
               </motion.div>
 
-              {/* Chibi Ayush: Enlarged size, click triggers whole-page magic effect */}
+              {/* Chibi Ayush: Perfectly scaled, click triggers whole-page magic effect */}
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{
@@ -307,13 +313,13 @@ export default function AuthPage({ onAuthenticated }) {
                   } catch (e) {}
                   triggerFullPageMagic();
                 }}
-                className="cursor-pointer relative z-10 overflow-visible transition-transform hover:scale-105 active:scale-95"
+                className="cursor-pointer relative z-10 transition-transform hover:scale-105 active:scale-95"
                 title="Click Ayush for whole-page magic sparkles!"
               >
                 <img
                   src={chibiImg}
                   alt="Chibi Ayush Mage"
-                  className="w-80 sm:w-96 md:w-[360px] lg:w-[410px] max-w-full object-contain mix-blend-multiply bg-transparent scale-110 select-none drop-shadow-md"
+                  className="w-64 sm:w-72 md:w-[300px] lg:w-[350px] max-w-full max-h-[380px] object-contain mix-blend-multiply bg-transparent select-none drop-shadow-md"
                 />
               </motion.div>
             </div>
@@ -322,15 +328,22 @@ export default function AuthPage({ onAuthenticated }) {
           {/* ════════════════════════════════════════════════════════════
               2. RIGHT PANEL (The Ancient Paper Scroll - Responsive)
              ════════════════════════════════════════════════════════════ */}
-          <div className="w-full md:w-1/2 flex-1 flex items-center justify-center p-3 sm:p-5 lg:p-6 relative">
+          <div className="w-full md:w-1/2 flex items-center justify-center p-1 sm:p-2 relative">
             {/* The Ancient Scroll Background Wrapper:
-                - On desktop (md+): Illustrated scroll background with spindles
-                - On mobile (<md): High-contrast parchment container with comfortable padding */}
-            <div className="w-full max-w-[500px] md:max-w-[650px] md:aspect-[3/4] relative bg-[#fcf6ea] md:bg-transparent md:bg-[url('/ancient-scroll-base.png')] md:bg-contain md:bg-no-repeat md:bg-center border-2 border-[#5c4033] md:border-none rounded-2xl md:rounded-none shadow-[4px_4px_0px_#5c4033] md:shadow-none flex flex-col justify-center px-4 py-4 sm:px-6 sm:py-6 md:px-[20%] md:pt-[20%] md:pb-[18%]">
+                - On desktop/tablet (md+): Illustrated scroll with exact 598/447 aspect ratio
+                - On mobile (<md): Clean high-contrast parchment container */}
+            <div
+              className="w-full max-w-[480px] md:max-w-[540px] lg:max-w-[580px] bg-[#fcf6ea] md:bg-transparent md:bg-[url('/ancient-scroll-base.png')] md:bg-contain md:bg-no-repeat md:bg-center border-2 border-[#5c4033] md:border-none rounded-2xl md:rounded-none shadow-[4px_4px_0px_#5c4033] md:shadow-none flex flex-col justify-center px-4 py-4 sm:px-6 sm:py-5 md:px-[18%] md:pt-[19%] md:pb-[14%] relative md:[aspect-ratio:598/447]"
+            >
+              {/* Mobile Decorative Header */}
+              <div className="block md:hidden text-center font-serif text-[11px] sm:text-xs font-bold text-[#5c4033] tracking-wider border-b border-[#5c4033]/20 pb-1.5 mb-1">
+                ✦ SECURE ENTRY GATE // AIML REALM ✦
+              </div>
+
               {/* Interactive Authentication Form & Real-Time Validation */}
               <form
                 onSubmit={handleSubmit}
-                className="w-full flex flex-col gap-2 font-sans relative z-10"
+                className="w-full flex flex-col gap-1.5 sm:gap-2 font-sans relative z-10"
               >
                 {/* Validation / Status Alert Banners */}
                 <AnimatePresence>
@@ -339,7 +352,7 @@ export default function AuthPage({ onAuthenticated }) {
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
-                      className="p-1.5 rounded-xl bg-red-100/95 border-2 border-red-400 text-red-900 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 shadow-xs"
+                      className="p-1 rounded-lg bg-red-100/95 border border-red-400 text-red-900 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 shadow-xs"
                     >
                       <AlertCircle className="w-3.5 h-3.5 shrink-0 text-red-600" />
                       <span className="truncate">{errorMsg}</span>
@@ -350,7 +363,7 @@ export default function AuthPage({ onAuthenticated }) {
                       initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -4 }}
-                      className="p-1.5 rounded-xl bg-emerald-100/95 border-2 border-emerald-500 text-emerald-900 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 shadow-xs"
+                      className="p-1 rounded-lg bg-emerald-100/95 border border-emerald-500 text-emerald-900 text-[10px] sm:text-xs font-bold flex items-center gap-1.5 shadow-xs"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-emerald-600" />
                       <span className="truncate">{successMsg}</span>
@@ -374,7 +387,7 @@ export default function AuthPage({ onAuthenticated }) {
                     }}
                     placeholder="enter your email address..."
                     required
-                    className="w-full px-3 py-1.5 sm:py-2 rounded-xl border-2 sm:border-3 border-[#5c4033] bg-[#fff8f1] text-[#5c4033] placeholder-[#5c4033]/45 font-bold text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#a34063] transition-all shadow-inner"
+                    className="w-full px-2.5 py-1 sm:py-1.5 rounded-lg sm:rounded-xl border-2 border-[#5c4033] bg-[#fff8f1] text-[#5c4033] placeholder-[#5c4033]/45 font-bold text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#a34063] transition-all shadow-inner"
                   />
                 </div>
 
@@ -400,12 +413,12 @@ export default function AuthPage({ onAuthenticated }) {
                       }}
                       placeholder="••••••••"
                       required
-                      className="w-full px-3 py-1.5 sm:py-2 pr-9 rounded-xl border-2 sm:border-3 border-[#5c4033] bg-[#fff8f1] text-[#5c4033] placeholder-[#5c4033]/45 font-bold text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#a34063] transition-all shadow-inner"
+                      className="w-full px-2.5 py-1 sm:py-1.5 pr-8 rounded-lg sm:rounded-xl border-2 border-[#5c4033] bg-[#fff8f1] text-[#5c4033] placeholder-[#5c4033]/45 font-bold text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#a34063] transition-all shadow-inner"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#5c4033]/60 hover:text-[#5c4033] p-0.5 cursor-pointer"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-[#5c4033]/60 hover:text-[#5c4033] p-0.5 cursor-pointer"
                       title={showPassword ? "Hide spell" : "Show spell"}
                     >
                       {showPassword ? (
@@ -421,7 +434,7 @@ export default function AuthPage({ onAuthenticated }) {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full mt-0.5 py-2 sm:py-2.5 px-3 rounded-xl bg-[#a34063] hover:brightness-105 active:scale-95 text-white font-extrabold text-xs sm:text-sm shadow-[2.5px_2.5px_0px_#5c4033] border-2 sm:border-3 border-[#5c4033] transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-60"
+                  className="w-full mt-0.5 py-1.5 sm:py-2 px-3 rounded-lg sm:rounded-xl bg-[#a34063] hover:brightness-105 active:scale-95 text-white font-extrabold text-xs sm:text-sm shadow-[2px_2px_0px_#5c4033] border-2 border-[#5c4033] transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-60"
                 >
                   {isLoading ? (
                     <span className="animate-pulse flex items-center gap-1.5">
@@ -458,7 +471,7 @@ export default function AuthPage({ onAuthenticated }) {
                 </div>
 
                 {/* Fast-Track Demo Login Bounding Box */}
-                <div className="border border-dashed border-[#5c4033] bg-[#fff8f1]/90 rounded-xl p-2 flex items-center justify-between gap-1.5 shadow-xs">
+                <div className="border border-dashed border-[#5c4033] bg-[#fff8f1]/90 rounded-lg sm:rounded-xl p-1.5 sm:p-2 flex items-center justify-between gap-1 shadow-xs">
                   <div className="text-left leading-tight">
                     <div className="flex items-center gap-1 text-[10px] sm:text-[11px] font-extrabold text-[#5c4033]">
                       <span>⚡ FAST-TRACK DEMO LOGIN</span>
@@ -473,7 +486,7 @@ export default function AuthPage({ onAuthenticated }) {
                     type="button"
                     onClick={handleFastTrack}
                     disabled={isLoading}
-                    className="px-2.5 py-1 rounded-lg border-2 border-[#5c4033] bg-[#fff8f1] shadow-[1.5px_1.5px_0px_#5c4033] active:scale-95 text-[10px] sm:text-xs font-extrabold text-[#5c4033] hover:bg-[#a34063] hover:text-white transition-all cursor-pointer shrink-0"
+                    className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg border-2 border-[#5c4033] bg-[#fff8f1] shadow-[1.5px_1.5px_0px_#5c4033] active:scale-95 text-[10px] sm:text-xs font-extrabold text-[#5c4033] hover:bg-[#a34063] hover:text-white transition-all cursor-pointer shrink-0"
                   >
                     Auto-Fill
                   </button>
@@ -484,7 +497,7 @@ export default function AuthPage({ onAuthenticated }) {
         </div>
 
         {/* Status Signal: Discreet status label "AIML Realm: ONLINE" (Bottom Right) */}
-        <div className="hidden sm:block absolute bottom-3 right-5 z-20 pointer-events-none">
+        <div className="hidden lg:block absolute bottom-3 right-5 z-20 pointer-events-none">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#382b26] text-[#fff8f1] border border-[#5c4033] text-[10px] sm:text-[11px] font-mono font-bold shadow-md">
             <span>AIML Realm: ONLINE</span>
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
