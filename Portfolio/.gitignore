@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+backend/node_modules/
 .pnp
 .pnp.js
 
@@ -15,7 +16,12 @@ out/
 .env.development.local
 .env.test.local
 .env.production.local
+backend/.env
+backend/.env.local
 *.local
+
+# Database preservation for hackathon evaluators
+!backend/database.json
 
 # Logs
 logs/

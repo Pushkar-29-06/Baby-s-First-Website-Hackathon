@@ -35,7 +35,7 @@ export default function Portfolio({ onBackToPortal }) {
 
   return (
     <div
-      className={`min-h-screen w-full relative transition-colors duration-700 overflow-x-hidden font-sans select-none ${
+      className={`min-h-screen w-full max-w-[100vw] relative transition-colors duration-700 overflow-x-hidden font-sans select-none ${
         isNightMode ? "dark bg-[#251b17] text-[#fff8f1]" : "bg-[#fff8f1] text-[#5c4033]"
       }`}
     >

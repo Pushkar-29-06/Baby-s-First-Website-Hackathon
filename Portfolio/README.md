@@ -1,13 +1,101 @@
 # 🧙‍♂️ Ayush Mane — The Junior Data Weaver & AI Alchemist ✦
 
 [![React](https://img.shields.io/badge/React-19.2-61dafb?style=flat-square&logo=react)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=flat-square&logo=node.js)](https://nodejs.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.3-646cff?style=flat-square&logo=vite)](https://vitejs.dev/)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-v4.3-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-14.3-ff0055?style=flat-square&logo=framer)](https://www.framer.com/motion/)
 [![Web Audio API](https://img.shields.io/badge/Web_Audio-API-f59e0b?style=flat-square)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 
-An interactive, story-driven portfolio blending full-stack AI engineering, real-time telemetry, and whimsical Data Mage aesthetics. Built for high performance, rich micro-interactions, tactile retro cards, and responsive storytelling.
+An interactive, story-driven portfolio blending full-stack AI engineering, real-time telemetry, and whimsical Data Mage aesthetics. Powered by a responsive React 19 frontend and a standalone Node.js Express backend with live local JSON persistence (`database.json`).
+
+---
+
+## ⚡ Quick Start for Judges & Evaluators
+
+Run both the backend API and frontend dev server with two quick terminal commands:
+
+### Terminal 1: Backend Server (Node.js + Express)
+```bash
+cd backend
+npm install
+npm start
+# ✨ AIML Local Node Backend running on port 5000...
+```
+
+### Terminal 2: Frontend Client (Vite + React)
+```bash
+npm install
+npm run dev
+# ➜ Local: http://localhost:5173/
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+---
+
+## 🔑 Demo Access Credentials
+
+From the Gatekeeper Authentication Realm screen:
+- **Email / Mage ID**: `guest` (or `guest@mage.realm`)
+- **Secret Spell**: `magic`
+- *Or simply click the **"Fast-Track Demo Login"** button on the scroll.*
+
+---
+
+## 🏗️ Architecture & Component Hierarchy
+
+```
+Portfolio/
+├── .env                           # Frontend environment config (VITE_API_BASE_URL)
+├── .gitignore                     # Production ignore rules (preserves database.json)
+├── package.json                   # Client dependencies (React 19, Vite, Tailwind v4)
+├── backend/                       # Standalone Node.js Express REST API
+│   ├── .env                       # Backend environment config (PORT=5000)
+│   ├── .gitignore                 # Ignores node_modules & .env; tracks database.json
+│   ├── database.json              # Committed JSON DB (odometer, triggers, guestbook)
+│   ├── package.json               # Backend dependencies (express, cors, nodemon)
+│   └── server.js                  # Express API routes & fs persistence
+├── public/                        # Static audio & high-res illustrated assets
+│   ├── 1792262595671.png          # Archmage character art
+│   ├── ancient-scroll-base.png    # Illustrated parchment scroll asset
+│   ├── ayush_chibi.png            # Chibi avatar asset
+│   └── sounds/                    # Chimes, pops, and Samvaad audio
+│       ├── chime.mp3
+│       ├── pop.mp3
+│       └── samvaad.mpeg
+└── src/
+    ├── assets/                    # Bundled icons & images
+    ├── components/
+    │   ├── Footer.jsx             # Real-time Guestbook & Archmage Overdrive Easter Egg
+    │   ├── Header.jsx             # Sticky navbar, mobile drawer, Bell & Odometer
+    │   ├── Hero.jsx               # 3D interactive cloud character sandbox
+    │   ├── OriginStory.jsx        # 3-Act story cards (The Awakening, Synthesis, Wand)
+    │   ├── SparkleCursor.jsx      # Wand cursor trail & Master Alchemist badge
+    │   └── Spellbook.jsx          # Featured AI projects & live audio waveform player
+    ├── pages/
+    │   ├── AuthPage.jsx           # Portal login / authentication realm
+    │   └── Portfolio.jsx          # Master portfolio layout & theme manager
+    └── utils/
+        ├── api.js                 # API endpoint constant & fetch helper
+        ├── audio.js               # Web Audio synth sound generator
+        └── firebase.js            # Client authentication SDK & session manager
+```
+
+---
+
+## 📡 Backend API Endpoints (`http://localhost:5000/api`)
+
+The backend runs on Express with CORS enabled and uses `database.json` for file-based database persistence:
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/odometer` | Returns current view count `{ count: db.odometer }` |
+| `POST` | `/api/odometer/tick` | Increments odometer count and returns `{ count: db.odometer }` |
+| `POST` | `/api/easter-egg/trigger`| Increments overdrive counter and returns `{ overdrive_triggers: n }` |
+| `GET` | `/api/guestbook` | Returns all inscribed grimoire entries as a JSON array |
+| `POST` | `/api/guestbook` | Inscribes a new entry `{ name, message, timestamp }` |
 
 ---
 
@@ -15,149 +103,73 @@ An interactive, story-driven portfolio blending full-stack AI engineering, real-
 
 ### 1. 🏰 Gatekeeper Authentication Realm (`AuthPage.jsx`)
 - **Illustrated Ancient Scroll**: Custom parchment interface with brass rings and wooden spindles.
-- **Simulated Firebase Auth**: Production-ready client authentication SDK with persistent local storage, RFC-compliant email validation, error handling, and password security.
-- **Fast-Track Demo Access**: One-click bypass for evaluators (`guest` / `magic`).
-- **Interactive Chibi Mage**: Clickable Ayush avatar triggering whole-page confetti magic.
+- **Client Authentication SDK**: Persistent local storage, RFC-compliant email validation, error handling, and password security.
+- **Fast-Track Demo Access**: One-click bypass for instant access (`guest` / `magic`).
+- **Interactive Chibi Mage**: Clickable Ayush avatar triggering full-page celebration confetti.
 
 ### 2. 🪄 Wand Cursor & Sparkle Trail (`SparkleCursor.jsx`)
 - **Custom Wand Cursor**: Dynamic pixel-art wand pointer with custom click hotspots.
 - **Sparkle Particle Physics**: Ambient pinging particles trailing cursor movements and multi-colored double-click star bursts.
-- **Persistent Achievement Badge**: Automatically attaches the glowing `✦ MASTER ALCHEMIST` badge once unlocked.
+- **Persistent Achievement Badge**: Automatically attaches the glowing `✦ MASTER ALCHEMIST` badge once unlocked from the Easter Egg.
 
-### 3. ⚡ 3D Parallax Hero Sandbox (`Hero.jsx`)
+### 3. 🔔 Interactive Notification Bell & System Alert (`Header.jsx`)
+- **Animated Bell**: Positioned next to the Vintage Odometer with unread radar ping (`animate-ping`) and bouncy animation.
+- **System Alert Dropdown**: Framer Motion animated modal revealing the clue to find the hidden red-capped mushroom in the undergrowth.
+
+### 4. 📱 Bulletproof Mobile Navigation (`Header.jsx`)
+- **Single-Row Top Bar on Mobile**: Prevents vertical bloating and screen clutter on small viewports.
+- **Enchanted Hamburger Drawer**: Smooth sliding drawer with thumb-friendly navigation links and an embedded vintage odometer ticker.
+- **Full Desktop Capsule**: Nav pills, Dream Mode toggle, volume switch, and live 5-digit zero-padded odometer (`00432`).
+
+### 5. ⚡ 3D Parallax Hero Sandbox (`Hero.jsx`)
 - **Interactive Cloud Avatar**: Ayush reading his grimoire with continuous floating motion and 3D parallax tilt physics responding to mouse movements.
 - **Tactile Comic Bubbles**: Interactive speech bubbles prompting magic sparks and double-click celebration effects.
-- **High-Contrast Typography**: Bold, playful headlines with responsive scaling across mobile, tablet, and widescreen viewports.
+- **Responsive Typography**: Bold, playful headlines with mobile-optimized scaling (`text-5xl md:text-7xl lg:text-8xl`).
 
-### 4. 📜 3-Act Origin Story (`OriginStory.jsx`)
-- **The Awakening**: Early AIML roots, neural networks, and mathematical foundations.
-- **The Synthesis**: Merging heavy data engineering with modern reactive UI design.
-- **The Wand & The Web**: Deploying PyTorch models, real-time pipelines, and micro-frontends.
-- **Tactile Retro Styling**: Warm parchment fills (`#fbf5eb`), dark roast borders (`#382b26`), and 3D offset drop shadows.
-
-### 5. 🔮 The Spellbook — Featured Projects (`Spellbook.jsx`)
+### 6. 🔮 The Spellbook — Featured Projects (`Spellbook.jsx`)
+- **Responsive CSS Grid**: Dynamic layout (`grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8`).
 - **🎙️ SamvaadAI (The Conversational Oracle)**:
   - Voice-first multilingual AI translating government documentation into colloquial Marathi streams with sub-300ms latency.
   - **Live Audio Streaming**: Integrated MPEG audio player (`samvaad.mpeg`) with interactive animated equalizer bars and live status telemetry.
-  - Tech tags: `#FastAPI`, `#Whisper ASR`, `#Coqui TTS`, `#Marathi NLP`, `#WebSockets`.
 - **📊 Insight Hub (The Data Crystal Ball)**:
   - Enterprise telemetry and predictive anomaly detection dashboard with retro SVG analytics window.
-  - Tech tags: `#Next.js`, `#Python Pandas`, `#scikit-learn`, `#D3.js`, `#PostgreSQL`.
 - **🤖 AI Tutor (The Digital Mentor)**:
   - Personalized CS curriculum companion with adaptive reinforcement learning curves and contextual RAG.
-  - Tech tags: `#Adaptive RL`, `#Vector Embeddings`, `#Contextual RAG`, `#PyTorch`, `#LangChain`.
 
-### 6. 🍄 "Archmage Overdrive" Secret Easter Egg (`Footer.jsx`)
+### 7. 📖 Real-Time Enchanted Guestbook (`Footer.jsx`)
+- **Live Local Node Backend Integration**: Fetches real-time entries directly from `GET /api/guestbook`.
+- **Instant Inscription**: Submissions via `POST /api/guestbook` refresh the grimoire dynamically with zero page reloads.
+- **Archive Pagination**: Clean `↓ Read More Spells...` and `↑ Hide Grimoire Archives` toggle with `break-words` text wrapping.
+
+### 8. 🍄 "Archmage Overdrive" Secret Easter Egg (`Footer.jsx`)
 - **Hidden Woodland Spirit**: Concealed mushroom button in the bottom telemetry corner.
 - **Web Audio Level-Up Synth (`audio.js`)**: Real-time synthesized square-wave frequency ramp (200Hz $\to$ 1200Hz) layered over a harmonic major chord arpeggio (C5-E5-G5-C6) that bypasses global mute.
-- **Full-Screen Overclocked Overlay**:
-  - Spring-animated Archmage avatar with glowing yellow-gold screen blend aura.
-  - Violently vibrating `⚠️ AIML NEURAL CORE OVERCLOCKED! ⚠️` typography.
-  - Bouncy "Claim Master Alchemist Badge 🏆" button unlocking session-persistent cursor badges.
-
-### 7. 🌙 Dual Realm Theming ("Dream Mode" vs Day Mode)
-- **Top Sticky Dial Header (`Header.jsx`)**: Nav pills, sliding Dream Mode switch, volume toggle, and retro 6-digit vintage odometer.
-- **Decoupled CSS-First Dark Mode**: Tailwind CSS v4 `@variant dark` rules prevent OS system dark mode from colliding with custom Day/Night state.
-
-### 8. 📖 Enchanted Telemetry Grimoire (`Footer.jsx`)
-- **Interactive Guestbook**: Inscribe greetings with persistent storage and celebration confetti bursts.
+- **Live Overclock Counter**: Calls `POST /api/easter-egg/trigger` to update the global overclock tally live: `"⚠️ The AIML Core has been overclocked N times!"`.
+- **Master Alchemist Badge**: Claiming the badge grants an achievement badge attached to the player's wand cursor.
 
 ---
 
-## 🏗️ Project Architecture
+## ⚙️ Environment Variables
 
+### Frontend (`.env`)
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
 ```
-Portfolio/
-├── public/
-│   ├── 1792262595671.png          # Archmage character artwork
-│   ├── ancient-scroll-base.png    # Illustrated scroll asset
-│   ├── ayush_chibi.png            # Chibi avatar asset
-│   ├── icons.svg                  # Vector icons
-│   ├── mushroom-tree-bg.png       # Forest backdrop
-│   ├── portfolio-char.png         # Cloud character asset
-│   ├── wand-cursor*.png           # Custom wand cursor assets
-│   └── sounds/                    # Chimes, pops, and Samvaad audio
-│       ├── chime.mp3
-│       ├── pop.mp3
-│       └── samvaad.mpeg
-├── src/
-│   ├── assets/                    # Bundled static icons & images
-│   ├── components/                # Modular UI components
-│   │   ├── Footer.jsx             # Guestbook & Overdrive Easter Egg
-│   │   ├── Header.jsx             # Sticky navbar, pills, & odometer
-│   │   ├── Hero.jsx               # 3D character hero section
-│   │   ├── OriginStory.jsx        # Journey story cards
-│   │   ├── SparkleCursor.jsx      # Wand cursor & Master Alchemist badge
-│   │   └── Spellbook.jsx          # Project showcase & audio streamer
-│   ├── pages/                     # Primary routes
-│   │   ├── AuthPage.jsx           # Portal login / signup realm
-│   │   └── Portfolio.jsx          # Master portfolio experience
-│   ├── utils/                     # Core utilities & engines
-│   │   ├── audio.js               # Web Audio synth sound generator
-│   │   └── firebase.js            # Authentication SDK & local storage DB
-│   ├── App.jsx                    # Root view controller
-│   ├── index.css                  # Design tokens, cursors, & theme variants
-│   └── main.jsx                   # React 19 bootstrap entry
-├── .gitignore                     # Production ignore rules
-├── package.json
-└── vite.config.js
+
+### Backend (`backend/.env`)
+```env
+PORT=5000
 ```
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Tech Stack
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (version 18.0 or higher recommended)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-
-### Installation
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-username/ayush-portfolio.git
-   cd ayush-portfolio/Portfolio
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Start the local development server**:
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-4. **Build for production**:
-   ```bash
-   npm run build
-   ```
-
-5. **Preview the production bundle**:
-   ```bash
-   npm run preview
-   ```
-
----
-
-## 🔑 Demo Credentials
-
-To enter the realm immediately from the Gatekeeper screen:
-- **Email / Mage ID**: `guest` (or `guest@mage.realm`)
-- **Secret Spell**: `magic`
-- *Or click "Fast-Track Demo Login" on the portal scroll.*
-
----
-
-## 🛠️ Built With
-
-- **Framework**: [React 19](https://react.dev/)
-- **Build Tool**: [Vite 8](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Frontend**: [React 19](https://react.dev/), [Vite 8](https://vitejs.dev/), [Tailwind CSS v4](https://tailwindcss.com/)
+- **Backend**: [Node.js](https://nodejs.org/), [Express 5](https://expressjs.com/), [CORS](https://www.npmjs.com/package/cors), [Nodemon](https://nodemon.io/)
+- **Database**: Local JSON File Database (`backend/database.json`)
 - **Motion & Physics**: [Framer Motion](https://www.framer.com/motion/)
-- **Sound & Synthesis**: Native [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) & [use-sound](https://github.com/joshwcomeau/use-sound)
+- **Audio & Synthesis**: Native [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) & [use-sound](https://github.com/joshwcomeau/use-sound)
 - **Effects**: [canvas-confetti](https://www.npmjs.com/package/canvas-confetti)
 - **Icons**: [Lucide React](https://lucide.dev/)
 

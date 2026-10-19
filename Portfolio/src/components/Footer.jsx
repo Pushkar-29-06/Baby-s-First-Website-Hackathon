@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, BookMarked, Send, Heart } from "lucide-react";
@@ -11,40 +11,54 @@ import characterImg from "../assets/1792262595671.png";
  * and tactile 3D shadow matching the portfolio.png reference aesthetic.
  */
 export default function Footer({ isNightMode, onClaimBadge }) {
+  const API_BASE_URL = "http://localhost:5000/api";
+
   const [isOverdrive, setIsOverdrive] = useState(false);
+  const [triggerCount, setTriggerCount] = useState(0);
   const [guestName, setGuestName] = useState("");
   const [guestNote, setGuestNote] = useState("");
-  const [entries, setEntries] = useState([
-    {
-      id: 1,
-      name: "Ada Lovelace",
-      note: "The algorithms weave algebraic patterns just like Jacquard looms.",
-      date: "Oct 18, 2026",
-    },
-    {
-      id: 2,
-      name: "Hermione Granger",
-      note: "Brilliant Marathi NLP oracle. Much better than the library archives!",
-      date: "Oct 17, 2026",
-    },
-  ]);
+  const [entries, setEntries] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
-  const handleSignGuestbook = (e) => {
+  // Fetch existing guestbook entries on mount
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/guestbook`)
+      .then((res) => res.json())
+      .then((data) => setEntries(data))
+      .catch(console.error);
+  }, []);
+
+  const handleSignGuestbook = async (e) => {
     e.preventDefault();
     if (!guestName.trim() || !guestNote.trim()) return;
+    setIsSubmitting(true);
 
-    setEntries([
-      {
-        id: Date.now(),
+    try {
+      const payload = {
         name: guestName.trim(),
-        note: guestNote.trim(),
-        date: "Just now",
-      },
-      ...entries,
-    ]);
-
-    setGuestName("");
-    setGuestNote("");
+        message: guestNote.trim(),
+        timestamp: new Date().toISOString(),
+      };
+      const res = await fetch(`${API_BASE_URL}/guestbook`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+      if (result.success) {
+        // Re-fetch full list so order is always correct
+        const freshRes = await fetch(`${API_BASE_URL}/guestbook`);
+        const freshData = await freshRes.json();
+        setEntries(freshData);
+        setGuestName("");
+        setGuestNote("");
+      }
+    } catch (err) {
+      console.error("Guestbook submit failed:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
 
     try {
       confetti({
@@ -56,7 +70,7 @@ export default function Footer({ isNightMode, onClaimBadge }) {
     } catch (err) {}
   };
 
-  const handleMushroomClick = (e) => {
+  const handleMushroomClick = async (e) => {
     e?.stopPropagation?.();
     playLevelUpSound();
 
@@ -91,6 +105,17 @@ export default function Footer({ isNightMode, onClaimBadge }) {
     }
 
     setIsOverdrive(true);
+
+    // Notify backend about the Easter Egg trigger
+    try {
+      const res = await fetch(`${API_BASE_URL}/easter-egg/trigger`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      setTriggerCount(data.overdrive_triggers);
+    } catch (err) {
+      console.error("Easter-egg trigger failed:", err);
+    }
   };
 
   const handleClaimBadge = (e) => {
@@ -154,39 +179,58 @@ export default function Footer({ isNightMode, onClaimBadge }) {
             placeholder="Your Name or Mage Moniker"
             className="w-full px-4 py-2.5 rounded-2xl text-xs sm:text-sm border-2 border-[#382b26] bg-[#fff8f1] dark:bg-[#251b17] text-[#382b26] dark:text-[#fff8f1] placeholder-[#382b26]/40 dark:placeholder-[#fff8f1]/40 focus:outline-none focus:ring-2 focus:ring-[#a34063] transition-all shadow-inner"
           />
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col md:flex-row gap-4 w-full">
             <input
               type="text"
               value={guestNote}
               onChange={(e) => setGuestNote(e.target.value)}
               placeholder="Inscribe your spell or greeting..."
-              className="flex-1 px-4 py-2.5 rounded-2xl text-xs sm:text-sm border-2 border-[#382b26] bg-[#fff8f1] dark:bg-[#251b17] text-[#382b26] dark:text-[#fff8f1] placeholder-[#382b26]/40 dark:placeholder-[#fff8f1]/40 focus:outline-none focus:ring-2 focus:ring-[#a34063] transition-all shadow-inner"
+              className="w-full md:flex-1 px-4 py-2.5 rounded-2xl text-xs sm:text-sm border-2 border-[#382b26] bg-[#fff8f1] dark:bg-[#251b17] text-[#382b26] dark:text-[#fff8f1] placeholder-[#382b26]/40 dark:placeholder-[#fff8f1]/40 focus:outline-none focus:ring-2 focus:ring-[#a34063] transition-all shadow-inner"
             />
             <button
               type="submit"
-              className="px-5 py-2.5 rounded-2xl bg-[#a34063] text-white border-2 border-[#382b26] shadow-[2px_2px_0px_#382b26] hover:scale-102 active:scale-95 transition-all text-xs sm:text-sm font-bold flex items-center justify-center gap-2 cursor-pointer shrink-0"
+              disabled={isSubmitting}
+              className="w-full md:w-auto px-5 py-2.5 rounded-2xl bg-[#a34063] text-white border-2 border-[#382b26] shadow-[2px_2px_0px_#382b26] hover:scale-102 active:scale-95 transition-all text-xs sm:text-sm font-bold flex items-center justify-center gap-2 cursor-pointer shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span>Inscribe</span>
+              <span>{isSubmitting ? "Inscribing..." : "Inscribe"}</span>
               <Send className="w-3.5 h-3.5" />
             </button>
           </div>
         </form>
 
-        {/* Guestbook Inscriptions */}
-        <div className="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-          {entries.map((item) => (
+        {/* Guestbook Inscriptions — dynamic from API */}
+        <div className="space-y-2.5 max-h-64 overflow-y-auto pr-1">
+          {entries.length === 0 && (
+            <p className="text-center text-xs text-[#382b26]/50 dark:text-[#fff8f1]/50 py-6 italic">
+              The grimoire is empty… be the first to inscribe!
+            </p>
+          )}
+          {(showAll ? entries : entries.slice(0, 3)).map((entry, index) => (
             <div
-              key={item.id}
-              className="p-3.5 rounded-2xl text-xs sm:text-sm border border-[#382b26]/20 bg-[#fff8f1]/90 dark:bg-[#251b17]/90 shadow-xs"
+              key={entry.timestamp || index}
+              className="border border-[#e0cfbe] dark:border-[#fff8f1]/15 rounded-xl p-4 mb-3 bg-[#fffdf8]/50 dark:bg-[#251b17]/50 break-words whitespace-pre-wrap"
             >
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-bold text-[#a34063] dark:text-amber-400">{item.name}</span>
-                <span className="text-[10px] sm:text-xs text-[#382b26]/60 dark:text-[#fff8f1]/60 font-mono">{item.date}</span>
+              <div className="flex justify-between items-center mb-2">
+                <h4 className="font-bold text-[#a34063] dark:text-amber-400 break-words">{entry.name}</h4>
+                <span className="text-xs text-[#8c7a6b] dark:text-[#fff8f1]/50 font-mono shrink-0 ml-2">
+                  {entry.timestamp ? new Date(entry.timestamp).toLocaleDateString() : ""}
+                </span>
               </div>
-              <p className="text-[#382b26]/90 dark:text-[#fff8f1]/90 italic">"{item.note}"</p>
+              <p className="text-[#5c4033] dark:text-[#fff8f1]/90 italic text-sm break-words whitespace-pre-wrap">
+                "{entry.message}"
+              </p>
             </div>
           ))}
         </div>
+        {entries.length > 3 && (
+          <button
+            type="button"
+            onClick={() => setShowAll(!showAll)}
+            className="w-full text-center text-sm text-[#a34063] dark:text-amber-400 font-bold py-2 hover:opacity-70 transition-opacity cursor-pointer"
+          >
+            {showAll ? "↑ Hide Grimoire Archives" : "↓ Read More Spells..."}
+          </button>
+        )}
       </div>
 
       {/* Bottom Credits & Copyright */}
@@ -200,15 +244,15 @@ export default function Footer({ isNightMode, onClaimBadge }) {
       </div>
 
       {/* Secret Mushroom Easter Egg in Bottom-Right Corner */}
-      <div className="absolute -bottom-2 right-2 z-20">
+      <div className="absolute bottom-4 right-4 z-20">
         <button
           type="button"
           onClick={handleMushroomClick}
           title="🍄 Secret Mushroom! Click to enter Archmage Overdrive!"
           aria-label="Secret Mushroom Easter Egg"
-          className="group relative p-2 opacity-40 hover:opacity-100 hover:scale-125 transition-all duration-300 cursor-pointer"
+          className="group relative p-2 sm:p-2.5 opacity-60 hover:opacity-100 hover:scale-125 transition-all duration-300 cursor-pointer text-3xl md:text-2xl"
         >
-          <svg viewBox="0 0 40 40" className="w-8 h-8 drop-shadow-md">
+          <svg viewBox="0 0 40 40" className="w-9 h-9 sm:w-8 sm:h-8 drop-shadow-md">
             {/* Mushroom Stem */}
             <path d="M 16 24 C 15 32, 14 36, 13 38 L 27 38 C 26 36, 25 32, 24 24 Z" fill="#f7ebe0" stroke="#382b26" strokeWidth="2" />
             {/* Mushroom Cap */}
@@ -276,8 +320,11 @@ export default function Footer({ isNightMode, onClaimBadge }) {
             </motion.h1>
 
             {/* Subtitle */}
-            <p className="text-white/80 font-mono text-xs sm:text-sm tracking-widest uppercase mb-8 text-center max-w-lg z-10 px-4">
+            <p className="text-white/80 font-mono text-xs sm:text-sm tracking-widest uppercase mb-4 text-center max-w-lg z-10 px-4">
               ✦ QUANTUM TELEMETRY MAXED • ARCHMAGE AWAKENED ✦
+            </p>
+            <p className="text-amber-300/90 font-mono text-xs sm:text-sm tracking-wide mb-8 text-center z-10 px-4">
+              ⚠️ The AIML Core has been overclocked {triggerCount} time{triggerCount !== 1 ? "s" : ""}!
             </p>
 
             {/* The Claim Button */}

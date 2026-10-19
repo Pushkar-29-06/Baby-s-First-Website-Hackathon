@@ -79,12 +79,12 @@ export default function Hero({ isMuted, isNightMode }) {
       id="hero-section"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
-      className="min-h-[85vh] w-full flex flex-col md:flex-row items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16 pt-6 sm:pt-10 md:pt-0 relative select-none"
+      className="min-h-[85vh] w-full flex flex-col md:flex-row items-center justify-between px-4 md:px-16 pt-8 md:pt-0 text-center md:text-left relative select-none"
     >
       {/* ════════════════════════════════════════════════════════════════
           LEFT SIDE: Typography & CTA (50% Width)
          ════════════════════════════════════════════════════════════════ */}
-      <div className="w-full md:w-1/2 flex flex-col justify-center items-start z-10 relative py-6 md:py-12">
+      <div className="w-full md:w-1/2 flex flex-col items-center md:items-start z-10 relative py-6 md:py-12">
         {/* Ambient star sparkles matching portfolio.png */}
         <div className="absolute -top-4 left-2 text-amber-500 font-bold text-sm pointer-events-none animate-pulse">✦</div>
         <div className="absolute top-12 -left-3 text-current/40 text-xs pointer-events-none">✧</div>
@@ -109,10 +109,10 @@ export default function Hero({ isMuted, isNightMode }) {
             className="font-extrabold tracking-tight font-sans leading-none"
             style={{ color: isNightMode ? "#fff8f1" : "#382b26" }}
           >
-            <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl">
+            <span className="block text-5xl md:text-7xl lg:text-8xl">
               HELLO!
             </span>
-            <span className="flex items-center gap-2 sm:gap-3 text-4xl sm:text-6xl md:text-7xl lg:text-8xl mt-1 sm:mt-2">
+            <span className="flex items-center justify-center md:justify-start gap-2 sm:gap-3 text-5xl md:text-7xl lg:text-8xl mt-1 sm:mt-2">
               I'M AYUSH
               <span className="text-amber-400 text-3xl sm:text-5xl lg:text-6xl inline-block animate-pulse">
                 ✦
@@ -137,7 +137,7 @@ export default function Hero({ isMuted, isNightMode }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-6 sm:mt-8 flex items-center gap-3 sm:gap-4 relative"
+          className="mt-6 sm:mt-8 flex items-center justify-center md:justify-start gap-3 sm:gap-4 relative"
         >
           <button
             type="button"
@@ -158,7 +158,7 @@ export default function Hero({ isMuted, isNightMode }) {
       {/* ════════════════════════════════════════════════════════════════
           RIGHT SIDE: Interactive Character on Cloud (50% Width)
          ════════════════════════════════════════════════════════════════ */}
-      <div className="w-full md:w-1/2 flex items-center justify-center relative py-6 md:py-0 overflow-visible">
+      <div className="w-full md:w-1/2 mt-12 md:mt-0 flex items-center justify-center relative py-6 md:py-0 overflow-visible">
         {/* Continuous Floating Motion + Parallax Tilt following mouse */}
         <motion.div
           animate={{
@@ -177,12 +177,12 @@ export default function Hero({ isMuted, isNightMode }) {
           onDoubleClick={triggerDblClick}
           title="Click Ayush for magical sparkles!"
         >
-          {/* Comic Speech Bubble 1: "Double Click for Sparkles!" (Positioned lower as requested) */}
+          {/* Comic Speech Bubble 1: "Double Click for Sparkles!" (Positioned safely on mobile) */}
           <motion.div
             animate={{ y: [0, -4, 0] }}
             transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
             onClick={triggerDblClick}
-            className="absolute top-8 sm:top-12 -left-2 sm:-left-10 z-30 cursor-pointer group scale-90 sm:scale-100"
+            className="absolute top-4 sm:top-12 -left-1 sm:-left-8 z-30 cursor-pointer group scale-80 sm:scale-100"
           >
             <div className="bg-[#fffdf9] border-2 border-[#5c4033] px-3 py-1.5 rounded-2xl shadow-[2.5px_2.5px_0px_#5c4033] hover:scale-105 active:scale-95 transition-transform flex items-center gap-1.5 text-center">
               <span className="text-[10px] sm:text-xs font-bold text-[#5c4033] leading-tight font-sans">
@@ -210,7 +210,7 @@ export default function Hero({ isMuted, isNightMode }) {
             animate={{ y: [0, -5, 0] }}
             transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
             onClick={triggerMagic}
-            className="absolute top-12 sm:top-16 -right-2 sm:-right-8 z-30 cursor-pointer group scale-90 sm:scale-100"
+            className="absolute top-8 sm:top-16 -right-1 sm:-right-6 z-30 cursor-pointer group scale-80 sm:scale-100"
           >
             <div className="bg-[#fffdf9] border-2 border-[#5c4033] px-3.5 py-1.5 rounded-2xl shadow-[2.5px_2.5px_0px_#5c4033] hover:scale-105 active:scale-95 transition-transform flex items-center gap-1.5 text-center">
               <span className="text-[10px] sm:text-xs font-bold text-[#5c4033] leading-tight font-sans">
@@ -237,7 +237,7 @@ export default function Hero({ isMuted, isNightMode }) {
           <img
             src={characterImg}
             alt="Ayush The Junior Data Weaver"
-            className={`w-64 sm:w-80 md:w-96 lg:w-[440px] max-w-full object-contain select-none drop-shadow-2xl ${
+            className={`w-full max-w-[280px] md:max-w-md object-contain select-none drop-shadow-2xl ${
               isNightMode ? "" : "mix-blend-multiply"
             }`}
           />

@@ -1,0 +1,12 @@
+# Backend dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# Logs
+*.log
+
+# Keep local database for hackathon judges & instant local evaluation
+!database.json
