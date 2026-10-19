@@ -25,7 +25,8 @@ export default function Header({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    fetch(`${API_BASE_URL}/odometer/tick`, { method: "POST" })
+    const endpoint = `${import.meta.env.VITE_API_BASE_URL || API_BASE_URL}/odometer/tick`;
+    fetch(endpoint, { method: "POST" })
       .then((res) => res.json())
       .then((data) => {
         if (data && typeof data.count === "number") {

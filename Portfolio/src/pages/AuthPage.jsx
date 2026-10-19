@@ -167,40 +167,63 @@ export default function AuthPage({ onAuthenticated }) {
   };
 
   return (
-    <div className="w-full h-screen overflow-hidden bg-[#5c4033] bg-[url('/mushroom-tree-bg.png')] bg-cover bg-center flex items-center justify-center relative select-none font-sans p-2 sm:p-4">
+    <div className="min-h-screen w-full bg-[#5c4033] bg-[url('/mushroom-tree-bg.png')] bg-cover bg-center flex items-center justify-center relative select-none font-sans p-2 sm:p-4 md:p-6 py-4 sm:py-8 overflow-y-auto">
       {/* ════════════════════════════════════════════════════════════════
           THE INNER BROWSER WINDOW
-          w-[92%] h-[90%] max-w-7xl bg-[#fff8f1] border-4 border-[#5c4033] rounded-[2rem] flex flex-col relative shadow-[12px_12px_0px_rgba(0,0,0,0.15)]
+          Responsive card with macOS-styled title bar & shadow
          ════════════════════════════════════════════════════════════════ */}
-      <div className="w-[92%] h-[90%] max-w-7xl bg-[#fff8f1] border-4 border-[#5c4033] rounded-[2rem] flex flex-col relative shadow-[12px_12px_0px_rgba(0,0,0,0.15)] overflow-hidden">
+      <div className="w-[96%] sm:w-[92%] max-w-6xl my-auto bg-[#fff8f1] border-3 sm:border-4 border-[#5c4033] rounded-[1.5rem] sm:rounded-[2rem] flex flex-col relative shadow-[8px_8px_0px_rgba(0,0,0,0.18)] md:shadow-[12px_12px_0px_rgba(0,0,0,0.15)] overflow-hidden">
         {/* Mock Title Bar with Red/Yellow/Green dots and URL capsule */}
-        <div className="w-full bg-[#382b26] px-5 py-3 flex items-center justify-between border-b-2 border-[#2b201c] shrink-0 z-30">
+        <div className="w-full bg-[#382b26] px-4 sm:px-5 py-2.5 sm:py-3 flex items-center justify-between border-b-2 border-[#2b201c] shrink-0 z-30">
           {/* Top-left window control dots */}
-          <div className="flex items-center gap-2">
-            <span className="w-3.5 h-3.5 rounded-full bg-[#ef4444] border border-[#7f1d1d] shadow-inner" />
-            <span className="w-3.5 h-3.5 rounded-full bg-[#eab308] border border-[#713f12] shadow-inner" />
-            <span className="w-3.5 h-3.5 rounded-full bg-[#22c55e] border border-[#14532d] shadow-inner" />
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <span className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-[#ef4444] border border-[#7f1d1d] shadow-inner" />
+            <span className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-[#eab308] border border-[#713f12] shadow-inner" />
+            <span className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-[#22c55e] border border-[#14532d] shadow-inner" />
           </div>
 
           {/* Center dark capsule */}
-          <div className="hidden sm:flex items-center justify-center w-72 md:w-96 h-6 rounded-full bg-[#291f1b] border border-[#483730] text-[11px] font-mono text-[#f7ebe0]/75 shadow-inner">
-            <span>ayush.exe // authentication.realm</span>
+          <div className="flex items-center justify-center w-52 sm:w-72 md:w-96 h-5 sm:h-6 rounded-full bg-[#291f1b] border border-[#483730] text-[10px] sm:text-[11px] font-mono text-[#f7ebe0]/75 shadow-inner">
+            <span className="truncate px-2">ayush.exe // authentication.realm</span>
           </div>
 
-          <div className="w-12 text-right text-[10px] font-mono text-emerald-400 flex items-center justify-end gap-1">
+          <div className="text-right text-[10px] font-mono text-emerald-400 flex items-center justify-end gap-1 shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>ONLINE</span>
+            <span className="hidden sm:inline">ONLINE</span>
           </div>
         </div>
 
         {/* ════════════════════════════════════════════════════════════
             SPLIT CONTAINER: Left Character Panel & Right Ancient Scroll
            ════════════════════════════════════════════════════════════ */}
-        <div className="flex-1 w-full h-full flex flex-row relative overflow-hidden">
+        <div className="flex-1 w-full flex flex-col md:flex-row relative overflow-y-auto md:overflow-hidden">
+          {/* Mobile-only Interactive Chibi Header (<md) */}
+          <div className="flex md:hidden flex-col items-center justify-center pt-3 pb-1 select-none">
+            <motion.div
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                try {
+                  playPop();
+                } catch (e) {}
+                triggerFullPageMagic();
+              }}
+              className="cursor-pointer flex items-center gap-2 px-3.5 py-1 bg-[#fff8f1] border-2 border-[#5c4033] rounded-full shadow-[2px_2px_0px_#5c4033] transition-transform active:scale-95"
+              title="Click Ayush for whole-page magic sparkles!"
+            >
+              <img
+                src={chibiImg}
+                alt="Chibi Ayush"
+                className="w-7 h-7 object-contain mix-blend-multiply"
+              />
+              <span className="text-[11px] font-extrabold text-[#5c4033]">
+                Identify yourself, Mage! ✦
+              </span>
+            </motion.div>
+          </div>
+
           {/* ════════════════════════════════════════════════════════════
-              1. LEFT PANEL (Interactivity & The Character)
+              1. LEFT PANEL (Desktop Character Panel >=md)
               Prominent Chibi Ayush image with click-to-sparkle whole-page effect
-              No bottom curve line.
              ════════════════════════════════════════════════════════════ */}
           <div className="hidden md:flex md:w-1/2 h-full flex-col justify-center items-center p-4 lg:p-6 relative select-none overflow-visible">
             {/* Ambient Star Sparkles */}
@@ -297,14 +320,14 @@ export default function AuthPage({ onAuthenticated }) {
           </div>
 
           {/* ════════════════════════════════════════════════════════════
-              2. RIGHT PANEL (The Ancient Paper Scroll - Non-Scrollable)
-              Uses user-provided ancient scroll with wooden spindles and brass rings
+              2. RIGHT PANEL (The Ancient Paper Scroll - Responsive)
              ════════════════════════════════════════════════════════════ */}
-          <div className="w-full md:w-1/2 h-full flex items-center justify-center p-2 sm:p-4 lg:p-6 relative">
+          <div className="w-full md:w-1/2 flex-1 flex items-center justify-center p-3 sm:p-5 lg:p-6 relative">
             {/* The Ancient Scroll Background Wrapper:
-                Preserves exact wooden spindles and rings; form sits cleanly in parchment writing area */}
-            <div className="w-full max-w-[650px] aspect-[3/4] relative bg-[url('/ancient-scroll-base.png')] bg-contain bg-no-repeat bg-center flex flex-col justify-center px-[22%] pt-[22%] pb-[20%]">
-              {/* 3. Interactive Authentication Form & Real-Time Validation */}
+                - On desktop (md+): Illustrated scroll background with spindles
+                - On mobile (<md): High-contrast parchment container with comfortable padding */}
+            <div className="w-full max-w-[500px] md:max-w-[650px] md:aspect-[3/4] relative bg-[#fcf6ea] md:bg-transparent md:bg-[url('/ancient-scroll-base.png')] md:bg-contain md:bg-no-repeat md:bg-center border-2 border-[#5c4033] md:border-none rounded-2xl md:rounded-none shadow-[4px_4px_0px_#5c4033] md:shadow-none flex flex-col justify-center px-4 py-4 sm:px-6 sm:py-6 md:px-[20%] md:pt-[20%] md:pb-[18%]">
+              {/* Interactive Authentication Form & Real-Time Validation */}
               <form
                 onSubmit={handleSubmit}
                 className="w-full flex flex-col gap-2 font-sans relative z-10"
@@ -435,7 +458,7 @@ export default function AuthPage({ onAuthenticated }) {
                 </div>
 
                 {/* Fast-Track Demo Login Bounding Box */}
-                <div className="border border-dashed border-[#5c4033] bg-[#fff8f1]/90 rounded-xl p-1.5 sm:p-2 flex items-center justify-between gap-1.5 shadow-xs">
+                <div className="border border-dashed border-[#5c4033] bg-[#fff8f1]/90 rounded-xl p-2 flex items-center justify-between gap-1.5 shadow-xs">
                   <div className="text-left leading-tight">
                     <div className="flex items-center gap-1 text-[10px] sm:text-[11px] font-extrabold text-[#5c4033]">
                       <span>⚡ FAST-TRACK DEMO LOGIN</span>
@@ -460,10 +483,10 @@ export default function AuthPage({ onAuthenticated }) {
           </div>
         </div>
 
-        {/* Status Signal: Small status label "Firebase Backend: ONLINE" alongside green glowing dot (Bottom Right) */}
-        <div className="absolute bottom-3 right-5 z-20 pointer-events-none">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#382b26] text-[#fff8f1] border border-[#5c4033] text-[11px] font-mono font-bold shadow-md">
-            <span>Firebase Backend: {FIREBASE_STATUS}</span>
+        {/* Status Signal: Discreet status label "AIML Realm: ONLINE" (Bottom Right) */}
+        <div className="hidden sm:block absolute bottom-3 right-5 z-20 pointer-events-none">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#382b26] text-[#fff8f1] border border-[#5c4033] text-[10px] sm:text-[11px] font-mono font-bold shadow-md">
+            <span>AIML Realm: ONLINE</span>
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           </div>
         </div>

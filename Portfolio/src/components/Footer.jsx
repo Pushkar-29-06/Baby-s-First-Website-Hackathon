@@ -11,8 +11,6 @@ import characterImg from "../assets/1792262595671.png";
  * and tactile 3D shadow matching the portfolio.png reference aesthetic.
  */
 export default function Footer({ isNightMode, onClaimBadge }) {
-  const API_BASE_URL = "http://localhost:5000/api";
-
   const [isOverdrive, setIsOverdrive] = useState(false);
   const [triggerCount, setTriggerCount] = useState(0);
   const [guestName, setGuestName] = useState("");
@@ -23,7 +21,7 @@ export default function Footer({ isNightMode, onClaimBadge }) {
 
   // Fetch existing guestbook entries on mount
   useEffect(() => {
-    fetch(`${API_BASE_URL}/guestbook`)
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/guestbook`)
       .then((res) => res.json())
       .then((data) => setEntries(data))
       .catch(console.error);
@@ -40,7 +38,7 @@ export default function Footer({ isNightMode, onClaimBadge }) {
         message: guestNote.trim(),
         timestamp: new Date().toISOString(),
       };
-      const res = await fetch(`${API_BASE_URL}/guestbook`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/guestbook`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -48,7 +46,7 @@ export default function Footer({ isNightMode, onClaimBadge }) {
       const result = await res.json();
       if (result.success) {
         // Re-fetch full list so order is always correct
-        const freshRes = await fetch(`${API_BASE_URL}/guestbook`);
+        const freshRes = await fetch(`${import.meta.env.VITE_API_BASE_URL}/guestbook`);
         const freshData = await freshRes.json();
         setEntries(freshData);
         setGuestName("");
@@ -108,7 +106,7 @@ export default function Footer({ isNightMode, onClaimBadge }) {
 
     // Notify backend about the Easter Egg trigger
     try {
-      const res = await fetch(`${API_BASE_URL}/easter-egg/trigger`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/easter-egg/trigger`, {
         method: "POST",
       });
       const data = await res.json();
