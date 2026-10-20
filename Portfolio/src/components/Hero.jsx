@@ -4,6 +4,7 @@ import useSound from "use-sound";
 import confetti from "canvas-confetti";
 import { Sparkles } from "lucide-react";
 import characterImg from "../assets/1792262595671.png";
+import CharacterShowcase from "./CharacterShowcase";
 
 /**
  * Hero Component (Side-by-Side Responsive Layout)
@@ -156,92 +157,15 @@ export default function Hero({ isMuted, isNightMode }) {
       </div>
 
       {/* ════════════════════════════════════════════════════════════════
-          RIGHT SIDE: Interactive Character on Cloud (50% Width)
+          RIGHT SIDE: Interactive Character Showcase (2D / 3D Toggle)
          ════════════════════════════════════════════════════════════════ */}
-      <div className="w-full md:w-1/2 mt-12 md:mt-0 flex items-center justify-center relative py-6 md:py-0 overflow-visible">
-        {/* Continuous Floating Motion + Parallax Tilt following mouse */}
-        <motion.div
-          animate={{
-            y: [0, -12, 0],
-            rotateX: -offset.y * 10,
-            rotateY: offset.x * 10,
-          }}
-          transition={{
-            y: { repeat: Infinity, duration: 4, ease: "easeInOut" },
-            rotateX: { type: "spring", stiffness: 120, damping: 14 },
-            rotateY: { type: "spring", stiffness: 120, damping: 14 },
-          }}
-          style={{ transformStyle: "preserve-3d" }}
-          className="relative inline-block overflow-visible cursor-pointer"
-          onClick={triggerMagic}
-          onDoubleClick={triggerDblClick}
-          title="Click Ayush for magical sparkles!"
-        >
-          {/* Comic Speech Bubble 1: "Double Click for Sparkles!" (Positioned safely on mobile) */}
-          <motion.div
-            animate={{ y: [0, -4, 0] }}
-            transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-            onClick={triggerDblClick}
-            className="absolute top-4 sm:top-12 -left-1 sm:-left-8 z-30 cursor-pointer group scale-80 sm:scale-100"
-          >
-            <div className="bg-[#fffdf9] border-2 border-[#5c4033] px-3 py-1.5 rounded-2xl shadow-[2.5px_2.5px_0px_#5c4033] hover:scale-105 active:scale-95 transition-transform flex items-center gap-1.5 text-center">
-              <span className="text-[10px] sm:text-xs font-bold text-[#5c4033] leading-tight font-sans">
-                Double Click<br />for Sparkles!
-              </span>
-              <span className="text-amber-500 font-bold text-xs">✦</span>
-            </div>
-            {/* Curved arrow pointing to Ayush */}
-            <svg
-              className="w-5 sm:w-6 h-5 sm:h-6 text-[#5c4033] absolute -bottom-3 right-1 group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-transform"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M17 3 C12 8, 8 14, 5 19" />
-              <path d="M4 14 L5 19 L10 18" />
-            </svg>
-          </motion.div>
-
-          {/* Comic Speech Bubble 2: Right "click to make magic" */}
-          <motion.div
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-            onClick={triggerMagic}
-            className="absolute top-8 sm:top-16 -right-1 sm:-right-6 z-30 cursor-pointer group scale-80 sm:scale-100"
-          >
-            <div className="bg-[#fffdf9] border-2 border-[#5c4033] px-3.5 py-1.5 rounded-2xl shadow-[2.5px_2.5px_0px_#5c4033] hover:scale-105 active:scale-95 transition-transform flex items-center gap-1.5 text-center">
-              <span className="text-[10px] sm:text-xs font-bold text-[#5c4033] leading-tight font-sans">
-                click to<br />make magic
-              </span>
-              <span className="text-amber-500 font-bold text-xs">✦</span>
-            </div>
-            {/* Curved arrow pointing to Ayush */}
-            <svg
-              className="w-5 h-5 text-[#5c4033] absolute top-7 -left-2 group-hover:-translate-x-0.5 transition-transform"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M20 7 C14 10, 8 13, 3 15" />
-              <path d="M8 12 L3 15 L7 18" />
-            </svg>
-          </motion.div>
-
-          {/* Ayush Reading Spellbook on Cloud Image (1792262595671.png) */}
-          <img
-            src={characterImg}
-            alt="Ayush The Junior Data Weaver"
-            className={`w-full max-w-[280px] md:max-w-md object-contain select-none drop-shadow-2xl ${
-              isNightMode ? "" : "mix-blend-multiply"
-            }`}
-          />
-        </motion.div>
+      <div className="w-full md:w-1/2 mt-10 md:mt-0 flex items-center justify-center relative py-4 md:py-0 overflow-visible">
+        <CharacterShowcase
+          imageSrc={characterImg}
+          alt="Ayush The Junior Data Weaver"
+          isNightMode={isNightMode}
+          isMuted={isMuted}
+        />
       </div>
     </section>
   );

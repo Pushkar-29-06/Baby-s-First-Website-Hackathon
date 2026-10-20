@@ -65,5 +65,5 @@ app.post('/api/guestbook', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log('✨ AIML Local Node Backend running on port', PORT + '...');
+  console.log('✨ Server Running on : ', PORT + '...');
 });
