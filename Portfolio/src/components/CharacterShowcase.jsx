@@ -21,31 +21,11 @@ function DataMageModel({ scale = 1.9, position = [0, -0.2, 0] }) {
   );
 }
 
+import MagicalPreloader from "./MagicalPreloader";
+
 // Preload the 3D model asset for instant caching
 useGLTF.preload("/data-mage.glb");
 
-/**
- * Loading Fallback
- * Displayed inside the 3D Canvas via Html from @react-three/drei while the GLB downloads.
- */
-function ModelLoader() {
-  return (
-    <Html center>
-      <div className="flex flex-col items-center justify-center gap-2.5 p-4 rounded-2xl bg-[#fff8f1]/95 dark:bg-[#382b26]/95 border-2 border-[#5c4033] dark:border-amber-400 shadow-[4px_4px_0px_#5c4033] dark:shadow-[4px_4px_0px_rgba(0,0,0,0.5)] backdrop-blur-sm text-[#5c4033] dark:text-[#fff8f1] select-none text-center min-w-[210px]">
-        <div className="relative">
-          <RefreshCw className="w-6 h-6 text-[#a34063] animate-spin" />
-          <Sparkles className="w-3.5 h-3.5 text-amber-500 absolute -top-1 -right-2 animate-bounce" />
-        </div>
-        <p className="text-xs font-extrabold tracking-wider font-sans">
-          SUMMONING 3D MAGE...
-        </p>
-        <span className="text-[10px] text-[#5c4033]/70 dark:text-[#fff8f1]/70 font-mono">
-          weaving polygons & runes ✦
-        </span>
-      </div>
-    </Html>
-  );
-}
 
 /**
  * CharacterShowcase Component
@@ -197,8 +177,8 @@ export default function CharacterShowcase({
               />
               <pointLight position={[0, 3, 2]} intensity={0.9} color="#fef08a" />
 
-              {/* Suspense boundary with fallback loader */}
-              <Suspense fallback={<ModelLoader />}>
+              {/* Suspense boundary with magical preloader */}
+              <Suspense fallback={<MagicalPreloader />}>
                 <Float speed={2} rotationIntensity={0.25} floatIntensity={0.4}>
                   <DataMageModel />
                 </Float>

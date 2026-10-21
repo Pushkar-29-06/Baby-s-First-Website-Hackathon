@@ -23,6 +23,28 @@ export default function Header({
   const [hasRead, setHasRead] = useState(false);
   const [viewCount, setViewCount] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mageName, setMageName] = useState(() => {
+    try {
+      return localStorage.getItem("mageName") || "";
+    } catch (e) {
+      return "";
+    }
+  });
+
+  useEffect(() => {
+    const syncMageName = () => {
+      try {
+        setMageName(localStorage.getItem("mageName") || "");
+      } catch (e) {}
+    };
+    syncMageName();
+    window.addEventListener("storage", syncMageName);
+    const interval = setInterval(syncMageName, 2000);
+    return () => {
+      window.removeEventListener("storage", syncMageName);
+      clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     const endpoint = `${import.meta.env.VITE_API_BASE_URL || API_BASE_URL}/odometer/tick`;
@@ -126,6 +148,14 @@ export default function Header({
               );
             })}
           </nav>
+
+          {/* Welcome back, Archmage [Name] Pill */}
+          {mageName && (
+            <div className="hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100/90 dark:bg-amber-950/80 border-2 border-amber-500/70 text-amber-950 dark:text-amber-200 text-xs font-serif font-black shadow-xs transition-all">
+              <span className="text-amber-500 animate-pulse">✦</span>
+              <span>Welcome back, Archmage {mageName}!</span>
+            </div>
+          )}
         </div>
 
         {/* Right Side: Quick Dials & Controls */}
@@ -271,6 +301,14 @@ export default function Header({
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="md:hidden overflow-hidden border-t border-current/15 bg-[#fff8f1]/95 dark:bg-[#251b17]/95 backdrop-blur-xl px-4 py-4 space-y-4 shadow-xl"
           >
+            {/* Welcome Archmage Mobile Banner */}
+            {mageName && (
+              <div className="p-2.5 rounded-xl bg-amber-100/90 dark:bg-amber-950/80 border-2 border-amber-500/70 text-amber-950 dark:text-amber-200 text-xs font-serif font-black flex items-center justify-center gap-1.5 shadow-xs">
+                <span className="text-amber-500 animate-pulse">✦</span>
+                <span>Welcome back, Archmage {mageName}!</span>
+              </div>
+            )}
+
             {/* Nav Links Stack */}
             <div className="flex flex-col gap-2">
               {navItems.map((item) => {

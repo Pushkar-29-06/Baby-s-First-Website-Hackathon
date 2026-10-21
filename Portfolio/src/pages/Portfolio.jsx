@@ -4,6 +4,9 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import OriginStory from "../components/OriginStory";
 import Spellbook from "../components/Spellbook";
+import ScrollOfTruth from "../components/ScrollOfTruth";
+import CrystalBall from "../components/CrystalBall";
+import VisitorMemory from "../components/VisitorMemory";
 import Footer from "../components/Footer";
 
 /**
@@ -50,6 +53,9 @@ export default function Portfolio({ onBackToPortal }) {
       {/* Mid-Right Subtle Sky Blue Blob */}
       <div className="pointer-events-none fixed top-1/2 -right-32 w-80 h-80 rounded-full bg-[#38bdf8] filter blur-3xl opacity-15 z-0" />
 
+      {/* Visitor Memory Inscription Modal (Checks localStorage) */}
+      <VisitorMemory isMuted={isMuted} />
+
       {/* 2. The Navbar (Sticky Top) */}
       <Header
         activeTab={activeTab}
@@ -72,7 +78,13 @@ export default function Portfolio({ onBackToPortal }) {
         {/* Section 2: Spellbook (Featured Projects: SamvaadAI, Insight Hub, AI Tutor) */}
         <Spellbook isNightMode={isNightMode} isMuted={isMuted} />
 
-        {/* Section 3: Footer (Guestbook & Secret Mushroom Easter Egg) */}
+        {/* Section 3: Scroll of Truth (Torch/Flashlight Reveal) */}
+        <ScrollOfTruth isNightMode={isNightMode} isMuted={isMuted} />
+
+        {/* Section 4: The Crystal Ball (Tech Fortune Teller) */}
+        <CrystalBall isNightMode={isNightMode} isMuted={isMuted} />
+
+        {/* Section 5: Footer (Guestbook & Secret Mushroom Easter Egg) */}
         <Footer isNightMode={isNightMode} />
       </main>
     </div>
